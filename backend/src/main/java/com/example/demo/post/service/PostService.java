@@ -1,12 +1,17 @@
 package com.example.demo.post.service;
 
 import com.example.demo.post.domain.Post;
-import com.example.demo.post.domain.PostCreateRequest;
+import com.example.demo.post.domain.PostCreateRequestDTO;
+import com.example.demo.post.domain.PostMainPageDTO;
 import com.example.demo.post.repository.PostRepository;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 /*
     Service는 비즈니스 로직을 처리하는 계층
@@ -27,7 +32,7 @@ public class PostService {
         PostRepository와 UserRepository는 @RequiredArgsConstructor에 의해 생성자 주입을 통해 주입됨
     */
 
-    public void createPost(PostCreateRequest request){ // createPost 메서드는 게시물을 생성하는 기능을 수행
+    public void createPost(PostCreateRequestDTO request) { // createPost 메서드는 게시물을 생성하는 기능을 수행
         User user = userRepository.findById(request.getUserId()).get();
         /*
             주어진 userId를 사용하여 해당 사용자를 조회
@@ -38,7 +43,30 @@ public class PostService {
         post123.setText(request.getText());
         post123.setTitle(request.getTitle());
         post123.setUser(user);
-        
+
         postRepository.save(post123); // postRepository를 사용하여 새 게시물을 데이터베이스에 저장
     }
+
+    public List<PostMainPageDTO> getMainPagePosts() {
+        List<Post> posts = postRepository.findAll();
+        /*
+            findAll() 메서드를 호출하여 모든 게시물을 데이터베이스에서 가져온다.
+        */
+
+        return posts.stream()
+                .map(PostMainPageDTO::new)
+                .collect(Collectors.toList());
+        /*
+            posts.stream(): Post 객체의 리스트를 스트림으로 변환
+            .map(PostMainPageDTO::new): map 연산을 사용하여 각 Post 객체를 PostMainPageDTO 객체로 변환
+                                        PostMainPageDTO::new는 메서드 레퍼런스로, PostMainPageDTO 클래스의 생성자를 참조함
+                                        Post 객체를 인자로 받아 PostMainPageDTO 객체를 생성
+            .collect(Collectors.toList()): 변환된 PostMainPageDTO 객체들을 새로운 List로 수집
+
+            Collectors란 Stream을 일반적인 List, Set등으로 변경시키는 Stream 메서드
+        */
+    }
 }
+//    public String getUsernameById(Long userId) {
+//        return userRepository.findUsernameById(userId);
+//    }

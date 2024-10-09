@@ -1,15 +1,15 @@
 package com.example.demo.post.controller;
 
-import com.example.demo.post.domain.PostCreateRequest;
+import com.example.demo.post.domain.PostCreateRequestDTO;
+import com.example.demo.post.domain.PostMainPageDTO;
 import com.example.demo.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 // Controller는 클라이언트의 요청을 받아 처리하는 진입점 역할을 한다.
 
@@ -29,11 +29,15 @@ import org.springframework.web.bind.annotation.RestController;
     @RequiredArgsConstructor는 Lombok 라이브러리에서 제공하며, final로 선언된 모든 필드나 @NonNull로 선언된 필드에 대해 생성자를 자동으로 생성
     final 필드로 의존성을 주입할 때 주로 사용, 의존성 주입에서 생성자를 통해 주입받는 방식을 간편하게 만들기 위함
  */
-@RequestMapping("/post")
+//@RequestMapping("/post")
 /*
     @RequestMapping는 Spring MVC에서 요청 매핑을 설정하는 어노테이션
     특정 URL 패턴에 대해 이 컨트롤러가 처리할 요청들을 정의함.
     "/post" 경로로 오는 모든 요청을 이 컨트롤러에서 처리하게 만든다.
+    ---
+    @RequestMapping("/post") 주석을 해제하면,
+    @GetMapping("/main")의 실제 경로는 "/post/main"이 되기 때문에 경로를 /main으로 하려는 목적에 맞지 않다.
+    따라서 주석 처리를 한다.
  */
 @Slf4j // Logger 객체를 자동으로 생성해주어 log 인스턴스 사용 가능
 public class PostController {
@@ -51,12 +55,12 @@ public class PostController {
         결과적으로 의존성 주입을 더 간편하게 처리할 수 있음
      */
 
-    @PostMapping
+    @PostMapping("/post")
     /*
         POST /post 요청을 처리함
         POST 요청은 주로 서버에 데이터를 전송하기 위해 사용
      */
-    public ResponseEntity<Void> createPost(@RequestBody PostCreateRequest request){
+    public ResponseEntity<Void> createPost(@RequestBody PostCreateRequestDTO request){
         /*
             @RequestBody 어노테이션 누락: PostMapping 메서드에서 @RequestBody 어노테이션이 누락됨
             이로 인해 요청 본문의 JSON 데이터가 PostCreateRequest 객체로 제대로 변환되지 않음
@@ -76,4 +80,19 @@ public class PostController {
         postService.createPost(request);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/main")
+    /*
+        @GetMapping 어노테이션은 HTTP GET 요청을 이 메서드에 매핑
+        "/main" 경로로 들어오는 GET 요청을 이 메서드가 처리
+    */
+    public ResponseEntity<List<PostMainPageDTO>> getMainPagePosts(){
+        List<PostMainPageDTO> posts = postService.getMainPagePosts();
+        return ResponseEntity.ok(posts);
+    }
+    /*
+        getMainPagePosts() 메서드는 ResponseEntity<List<PostMainPageDTO>> 타입을 반환, PostMainPageDTO 객체의 리스트를 반환
+        ResponseEntity.ok()는 HTTP 상태 코드 200 (OK)와 함께 응답을 생성
+        실제 데이터(posts)를 ResponseEntity에 포함시켜 반환
+    */
 }

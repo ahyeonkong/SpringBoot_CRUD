@@ -2,6 +2,7 @@ package com.example.demo.post.domain;
 
 import com.example.demo.user.domain.User;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
 /*

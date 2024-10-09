@@ -15,5 +15,5 @@ spring:
         format_sql: true
         use_sql_comments: true
         hbm2ddl:
-          auto: update // 변경사항 반영 시 보통 update를 사용, 테스트나 초기 개발 단계에서는 create 사용
+          auto: update
         default_batch_fetch_size: 1000
