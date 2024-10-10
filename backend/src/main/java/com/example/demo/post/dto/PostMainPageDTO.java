@@ -1,5 +1,6 @@
-package com.example.demo.post.domain;
+package com.example.demo.post.dto;
 
+import com.example.demo.post.domain.Post;
 import lombok.Getter;
 @Getter
 public class PostMainPageDTO {
@@ -25,8 +26,8 @@ public class PostMainPageDTO {
 //    private String userName; 추후 사용자 이름 받아올 예정
 
     public PostMainPageDTO(Post post){
-        this.title = post.title;
-        this.userId = post.user.getId(); // Post 객체가 User 객체와 연관관계가 있음
+        this.title = post.getTitle();
+        this.userId = post.getUser().getId(); // Post 객체가 User 객체와 연관관계가 있음
     }
 
 

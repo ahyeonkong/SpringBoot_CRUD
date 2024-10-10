@@ -1,7 +1,7 @@
 package com.example.demo.post.controller;
 
-import com.example.demo.post.domain.PostCreateRequestDTO;
-import com.example.demo.post.domain.PostMainPageDTO;
+import com.example.demo.post.dto.PostCreateRequestDTO;
+import com.example.demo.post.dto.PostMainPageDTO;
 import com.example.demo.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

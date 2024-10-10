@@ -1,8 +1,8 @@
 package com.example.demo.post.service;
 
 import com.example.demo.post.domain.Post;
-import com.example.demo.post.domain.PostCreateRequestDTO;
-import com.example.demo.post.domain.PostMainPageDTO;
+import com.example.demo.post.dto.PostCreateRequestDTO;
+import com.example.demo.post.dto.PostMainPageDTO;
 import com.example.demo.post.repository.PostRepository;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.repository.UserRepository;

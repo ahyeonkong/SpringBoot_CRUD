@@ -4,6 +4,7 @@ import com.example.demo.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+@Getter // @Getter를 쓰는게 맞을까?
 @Entity
 /*
     @Entity는 JPA를 사용하여 Post 엔티티 정의
