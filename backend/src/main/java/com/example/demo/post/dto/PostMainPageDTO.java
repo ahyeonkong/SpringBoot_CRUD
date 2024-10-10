@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class PostMainPageDTO {
     /*
-        메인 페이지 조회를 위한 응답 DTO (PostMainPageDTO)
+        메인 페이지 조회를 위한 DTO (PostMainPageDTO)
         이 DTO는 서버에서 클라이언트에게 데이터를 보여줄 때 사용됨
 
         ex. 서버의 json 응답

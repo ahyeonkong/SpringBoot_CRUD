@@ -1,6 +1,8 @@
 package com.example.demo.post.controller;
 
+import com.example.demo.post.domain.Post;
 import com.example.demo.post.dto.PostCreateRequestDTO;
+import com.example.demo.post.dto.PostDetailDTO;
 import com.example.demo.post.dto.PostMainPageDTO;
 import com.example.demo.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,16 @@ import java.util.List;
     @RequestMapping("/post") 주석을 해제하면,
     @GetMapping("/main")의 실제 경로는 "/post/main"이 되기 때문에 경로를 /main으로 하려는 목적에 맞지 않다.
     따라서 주석 처리를 한다.
+    ---
+    @GetMapping("/main")을 MainController으로 경로를 분리했기 때문에 다시 작성해준다.
  */
+
+@RequestMapping("/post")
+    /*
+        /post에서 POST 메서드, /post/{post_id}에서 GET 메서드를 사용하기 위해서는
+        상위 페이지에 @RequestMapping("/post")로 페이지 매핑을 해준다.
+    */
+
 @Slf4j // Logger 객체를 자동으로 생성해주어 log 인스턴스 사용 가능
 public class PostController {
     @Autowired
@@ -55,7 +66,7 @@ public class PostController {
         결과적으로 의존성 주입을 더 간편하게 처리할 수 있음
      */
 
-    @PostMapping("/post")
+    @PostMapping
     /*
         POST /post 요청을 처리함
         POST 요청은 주로 서버에 데이터를 전송하기 위해 사용
@@ -81,18 +92,20 @@ public class PostController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/main")
-    /*
-        @GetMapping 어노테이션은 HTTP GET 요청을 이 메서드에 매핑
-        "/main" 경로로 들어오는 GET 요청을 이 메서드가 처리
-    */
-    public ResponseEntity<List<PostMainPageDTO>> getMainPagePosts(){
-        List<PostMainPageDTO> posts = postService.getMainPagePosts();
-        return ResponseEntity.ok(posts);
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostDetailDTO> getDetailPost(@PathVariable Long postId){
+        PostDetailDTO postDetailDTO = postService.getPostById(postId);
+        return ResponseEntity.ok(postDetailDTO);
     }
     /*
-        getMainPagePosts() 메서드는 ResponseEntity<List<PostMainPageDTO>> 타입을 반환, PostMainPageDTO 객체의 리스트를 반환
-        ResponseEntity.ok()는 HTTP 상태 코드 200 (OK)와 함께 응답을 생성
-        실제 데이터(posts)를 ResponseEntity에 포함시켜 반환
+        /{postId}는 경로 변수를 나타냄
+
+        ResponseEntity<PostDetailDTO>: 서버는 클라이언트에게 요청에 대한 처리 결과나 메시지를 본문에 포함해서 응답함
+                                       PostDetailDTO 타입의 본문을 포함
+        getDetailPost() 메서드 사용: 게시물의 상세 정보(작성자, 제목, 본문) 가져오는 기능
+        @PathVariable: 경로의 변수 부분({postId})을 메서드 파라미터 postId에 바인딩
+                       URL의 {postId}와 메서드 파라미터의 변수 이름이 같으면 기본적으로 자동 매핑
+        postService의 getPostById() 메서드를 호출하여 postId에 해당하는 게시물 상세 정보 가져옴
     */
+
 }

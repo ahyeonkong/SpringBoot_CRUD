@@ -2,16 +2,18 @@ package com.example.demo.post.service;
 
 import com.example.demo.post.domain.Post;
 import com.example.demo.post.dto.PostCreateRequestDTO;
+import com.example.demo.post.dto.PostDetailDTO;
 import com.example.demo.post.dto.PostMainPageDTO;
 import com.example.demo.post.repository.PostRepository;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 /*
     Service는 비즈니스 로직을 처리하는 계층
@@ -66,7 +68,32 @@ public class PostService {
             Collectors란 Stream을 일반적인 List, Set등으로 변경시키는 Stream 메서드
         */
     }
+
+    public PostDetailDTO getPostById(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 게시물이 없습니다."));
+        return new PostDetailDTO(post, post.getTitle(), post.getText());
+    }
+    /*
+         postRepository의 findById() 메서드 호출하여 id를 통해 해당 게시물 조회
+         이 메서드는 Optional<Post>를 반환함
+         Optional이 비어있을 경우(게시물이 없는 경우) 예외를 던짐 (404)
+
+         조회된 Post 객체를 사용하여 새로운 PostDetailDTO 객체를 생성
+         생성자에 post 객체 전체(게시물 id 찾음)와 함께 post.getTitle()과 post.getText()를 전달
+         생성된 DTO 객체를 반환
+    */
+
+    //    Id로 유저 이름 가져오기
+    //    public String getUsernameById(Long userId) {
+    //        return userRepository.findUsernameById(userId);
+    //    }
+
+
+
 }
-//    public String getUsernameById(Long userId) {
-//        return userRepository.findUsernameById(userId);
-//    }
+
+
+
+
+

@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter // @Getter는 getter 메서드를 자동으로 생성
 public class PostCreateRequestDTO {
     /*
-        게시판 작성을 위한 요청 DTO (PostCreateRequestDTO)
+        게시판 작성을 위한 DTO (PostCreateRequestDTO)
         이 DTO는 주로 클라이언트가 서버로 데이터를 보낼 때 사용되며, 게시물 생성을 요청할 때 필요한 데이터를 담고 있음
 
         이 클래스는 데이터베이스에 저장되는 엔티티가 아니며, 클라이언트와 서버 간에 데이터를 전달하기 위한 용도로 사용됨
