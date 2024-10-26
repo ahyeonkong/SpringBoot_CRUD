@@ -3,7 +3,9 @@ package com.example.demo.post.domain;
 import com.example.demo.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter // @Getter를 쓰는게 맞을까?
 @Entity
 /*
@@ -32,20 +34,4 @@ public class Post {
     // @JoinColumn은 이 필드가 외래 키임을 나타냄
     User user;
 
-    //setter 메서드
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

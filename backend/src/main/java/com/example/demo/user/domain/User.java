@@ -3,16 +3,18 @@ package com.example.demo.user.domain;
 import com.example.demo.post.domain.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+@Setter
 @Getter // @Getter를 사용하는게 맞을까?
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Long id; // 시퀀스 ID
     @Column
     String name; // 유저 실명
     @Column
