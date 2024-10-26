@@ -1,11 +1,15 @@
 package com.example.demo.post.repository;
 
 import com.example.demo.post.domain.Post;
+import com.example.demo.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 // JPA를 사용하여 Post 엔티티에 대한 CRUD(생성, 읽기, 업데이트, 삭제) 작업을 수행하는 Repository 인터페이스를 정의함
 public interface PostRepository extends JpaRepository<Post, Long> {
-
+    List<Post> findByUser(User user);
 }
 /*
     PostRepository 인터페이스는 JpaRepository를 상속받아 Post 엔티티에 대한 데이터베이스 작업을 처리하는 레포지토리 역할을 함
