@@ -14,9 +14,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Column
-    String name;
+    String name; // 유저 실명
     @Column
-    String img;
+    String img; // 프로필 이미지 파일 이름
+    @Column
+    String userLoginId; // 유저 로그인 아이디
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Post> postList = new ArrayList<>();
