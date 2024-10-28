@@ -4,6 +4,7 @@ import com.example.demo.post.domain.Post;
 import com.example.demo.post.dto.PostCreateRequestDTO;
 import com.example.demo.post.dto.PostDetailDTO;
 import com.example.demo.post.dto.PostMainPageDTO;
+import com.example.demo.post.dto.PostUpdateRequestDTO;
 import com.example.demo.post.repository.PostRepository;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.repository.UserRepository;
@@ -84,6 +85,7 @@ public class PostService {
          생성된 DTO 객체를 반환
     */
 
+    // 게시글 삭제 메서드 (deletePost)
     public boolean deletePost(Long postId){
         if(postRepository.existsById(postId)){
             postRepository.deleteById(postId);
@@ -92,11 +94,30 @@ public class PostService {
         return false;
     }
 
+    // 게시글 수정 메서드 (updatePost)
+    public PostUpdateRequestDTO updatePost(Long postId, PostUpdateRequestDTO postUpdateRequestDTO){
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 게시물이 없습니다."));
 
+        boolean isUpdated = false;
 
+        if (postUpdateRequestDTO.getTitle() != null && !postUpdateRequestDTO.getTitle().equals(post.getTitle())) {
+            post.setTitle(postUpdateRequestDTO.getTitle());
+            isUpdated = true;
+        }
 
+        if (postUpdateRequestDTO.getText() != null && !postUpdateRequestDTO.getText().equals(post.getText())) {
+            post.setText(postUpdateRequestDTO.getText());
+            isUpdated = true;
+        }
 
-
+        if (isUpdated) {
+            postRepository.save(post);
+            return new PostUpdateRequestDTO(post.getTitle(), post.getText(), post.getUser().getId());
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "변경된 내용이 없습니다.");
+        }
+    }
 }
 
 

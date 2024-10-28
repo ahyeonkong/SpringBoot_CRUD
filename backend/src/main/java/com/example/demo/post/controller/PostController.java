@@ -4,6 +4,7 @@ import com.example.demo.post.domain.Post;
 import com.example.demo.post.dto.PostCreateRequestDTO;
 import com.example.demo.post.dto.PostDetailDTO;
 import com.example.demo.post.dto.PostMainPageDTO;
+import com.example.demo.post.dto.PostUpdateRequestDTO;
 import com.example.demo.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -130,4 +131,11 @@ public class PostController {
         * @Id는 엔티티 클래스의 필드를 데이터베이스 테이블의 기본 키(primary key)와 매핑한다.
         * 이 어노테이션이 붙은 필드는 엔티티의 고유 식별자로 사용된다.
      */
+
+    @RequestMapping("/update/{postId}")
+    public ResponseEntity<PostUpdateRequestDTO> updatePost(@PathVariable Long postId,
+                                           @RequestBody PostUpdateRequestDTO postUpdateRequestDTO){
+        PostUpdateRequestDTO updateRequestDTO = postService.updatePost(postId, postUpdateRequestDTO);
+        return ResponseEntity.ok(updateRequestDTO);
+    }
 }

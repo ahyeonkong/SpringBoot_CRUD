@@ -1,5 +1,6 @@
 package com.example.demo.post.domain;
 
+import com.example.demo.post.dto.PostUpdateRequestDTO;
 import com.example.demo.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -33,5 +34,10 @@ public class Post {
     @JoinColumn(name = "user_id")
     // @JoinColumn은 이 필드가 외래 키임을 나타냄
     User user;
+
+    public void update(PostUpdateRequestDTO postUpdateRequestDTO){
+        this.title = postUpdateRequestDTO.getTitle();
+        this.text = postUpdateRequestDTO.getText();
+    }
 
 }
