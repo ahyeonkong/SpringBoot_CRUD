@@ -14,10 +14,23 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 /*
     PostRepository 인터페이스는 JpaRepository를 상속받아 Post 엔티티에 대한 데이터베이스 작업을 처리하는 레포지토리 역할을 함
     JpaRepository를 상속함으로써, PostRepository는 기본적인 CRUD 메서드를 자동으로 제공하며 다음과 같은 메서드들이 포함됨
-        save(Post entity): 엔티티를 저장하거나 업데이트
-        findById(Long id): ID로 엔티티를 조회
-        findAll(): 모든 엔티티를 조회
-        deleteById(Long id): ID로 엔티티를 삭제
+
+        * 게시글은 여기서 Post 엔티티이다.
+        save(Post post): 게시글 저장 또는 업데이트
+        saveAll(Iterable<Post> posts): 여러 게시글 한 번에 저장 또는 업데이트
+        findById(Long id): ID로 게시글 조회. Optional<Post> 반환
+        existsById(Long id): 해당 ID의 게시글 존재 여부 확인. boolean 반환
+        findAll(): 모든 게시글 조회
+        findAllById(Iterable<Long> ids): 주어진 ID 목록에 해당하는 게시글들 조회
+        count(): 전체 게시글 수 반환
+        deleteById(Long id): ID로 게시글 삭제
+        delete(Post post): 주어진 게시글 삭제
+        deleteAll(): 모든 게시글 삭제
+        deleteAll(Iterable<Post> posts): 주어진 게시글들 모두 삭제
+        flush(): 변경 사항 데이터베이스에 즉시 반영
+        saveAndFlush(Post post): 게시글 저장하고 즉시 flush
+        getOne(Long id): ID로 게시글 참조 가져옴. 실제 데이터는 사용 시점에 로딩
+
 
     이외에도 추가적인 메서드를 정의할 수 있으며 예를 들어, 게시물 제목이나 작성자에 따라 게시물을 검색하는 메서드를 추가할 수 있음
 */

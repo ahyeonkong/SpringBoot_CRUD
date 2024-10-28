@@ -108,4 +108,26 @@ public class PostController {
         postService의 getPostById() 메서드를 호출하여 postId에 해당하는 게시물 상세 정보 가져옴
     */
 
+    @DeleteMapping("/delete/{postId}")
+    public ResponseEntity<String> deletePost(@PathVariable Long postId){
+        boolean isDeleted = postService.deletePost(postId);
+        if(isDeleted){
+            return ResponseEntity.ok("게시글이 성공적으로 삭제되었습니다.");
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    /*
+        코드가 post 디렉토리 안에 있기 때문에, Post 엔티티의 id로 찾아 게시물을 삭제한다고 할 수 있다.
+
+        JPA의 동작에 의해 다음과 같이 게시물이 삭제된다.
+        * JPA는 @Id로 지정된 필드를 사용하여 데이터베이스에서 엔티티를 찾는다.
+        * existsById는 주어진 ID를 가진 엔티티가 데이터베이스에 존재하는지 확인한다.
+        * deleteById는 주어진 ID를 가진 엔티티를 데이터베이스에서 삭제한다.
+
+        @Id 어노테이션의 역할에 의해 JPA가 다음과 같이 동작한다.
+        * @Id는 엔티티 클래스의 필드를 데이터베이스 테이블의 기본 키(primary key)와 매핑한다.
+        * 이 어노테이션이 붙은 필드는 엔티티의 고유 식별자로 사용된다.
+     */
 }

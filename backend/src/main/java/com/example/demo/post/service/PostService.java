@@ -69,8 +69,8 @@ public class PostService {
         */
     }
 
-    public PostDetailDTO getPostById(Long id) {
-        Post post = postRepository.findById(id)
+    public PostDetailDTO getPostById(Long postId) {
+        Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 게시물이 없습니다."));
         return new PostDetailDTO(post, post.getTitle(), post.getText());
     }
@@ -84,12 +84,13 @@ public class PostService {
          생성된 DTO 객체를 반환
     */
 
-    //    Id로 유저 이름 가져오기
-    //    public String getUsernameById(Long userId) {
-    //        return userRepository.findUsernameById(userId);
-    //    }
-
-
+    public boolean deletePost(Long postId){
+        if(postRepository.existsById(postId)){
+            postRepository.deleteById(postId);
+            return true;
+        }
+        return false;
+    }
 
 
 
